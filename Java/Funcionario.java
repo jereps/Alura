@@ -18,7 +18,6 @@ class Funcionario{
 
 	public static int getIdentificador(){
 		return Funcionario.identificador;
-	}
 
 	public void setNome(String nome){
 		this.nome = nome;
@@ -65,3 +64,55 @@ class Funcionario{
 		System.out.println("Ganho Anual: R$ " + getGanhoAnual());
 	}
 }
+<<<<<<< HEAD
+=======
+
+class Empresa{
+	private String nome;
+	private int cnpj;
+	private Funcionario[] funcionarios;
+	private int livre = 0;
+
+	public Empresa(int tamanho){
+		funcionarios = new Funcionario[tamanho];
+	}
+
+	public void setNomeEmpresa(String nome){
+		this.nome = nome;
+	}
+
+	public void setCnpj(int cnpj){
+		this.cnpj = cnpj;
+	}
+
+	public Funcionario getFuncionario (int posicao){
+		return this.funcionarios[posicao];
+	}
+
+	public void adiciona(Funcionario f) {
+		this.funcionarios[this.livre] = f;
+		this.livre++;
+	}
+
+	public void mostraTodasAsInformacoes(){
+		for(int i = 0; i < this.livre; i++){
+			this.funcionarios[i].mostra();
+		}
+	}
+
+	public void mostraEmpregados(){
+		for(int i = 0; i < this.livre; i++){
+			System.out.println("Funcionario: " + this.funcionarios[i].getNome() + " Salario: " + this.funcionarios[i].getSalario());
+		}
+	}
+
+	public boolean contem(Funcionario f){
+		for(int i = 0; i < this.livre; i++){
+			if(this.funcionarios[i] == f){
+				 return true;
+			}
+		}
+		return false;
+	}
+}
+>>>>>>> 3cd1aa54e8be7a66305499cbb7f6be70f26886be
