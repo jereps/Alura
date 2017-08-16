@@ -64,8 +64,6 @@ class Funcionario{
 		System.out.println("Ganho Anual: R$ " + getGanhoAnual());
 	}
 }
-<<<<<<< HEAD
-=======
 
 class Empresa{
 	private String nome;
@@ -115,4 +113,3 @@ class Empresa{
 		return false;
 	}
 }
->>>>>>> 3cd1aa54e8be7a66305499cbb7f6be70f26886be
