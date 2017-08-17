@@ -18,6 +18,7 @@ class Funcionario{
 
 	public static int getIdentificador(){
 		return Funcionario.identificador;
+	}
 
 	public void setNome(String nome){
 		this.nome = nome;
