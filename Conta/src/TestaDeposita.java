@@ -5,7 +5,7 @@ public class TestaDeposita {
 		try {
 		cp.deposita(-100);
 		} catch (IllegalArgumentException e) {
-			System.out.println("Valor negativo não é permitido: " + e);
+			System.out.println(e.getMessage());
 		}
 	}
 }
