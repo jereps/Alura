@@ -6,7 +6,7 @@ public class Principal {
 		Conta conta2 = new ContaCorrente();
 		conta2.deposita(100.5);
 
-		System.out.println(conta.getSaldo());
-		System.out.println(conta2.getSaldo());
+		System.out.printf("O saldo é: %.2f", conta.getSaldo());
+		System.out.printf("O saldo é: %.2f", conta2.getSaldo());
 	}
 }
