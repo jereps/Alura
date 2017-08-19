@@ -3,10 +3,9 @@ public abstract class Conta {
 
 	protected double saldo;
 
-	void deposita(double valor) {
+	void deposita(double valor) throws ValorInvalidoException {
 		if (valor < 0) {
-			throw new IllegalArgumentException("Você tentou depositar" + 
-												" um valor negativo");
+			throw new ValorInvalidoException(valor);
 		} else {
 			this.saldo += valor;
 		}
