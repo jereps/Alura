@@ -1,3 +1,6 @@
+package br.com.empresa.sistema;
+import br.com.empresa.conta.Conta;
+
 class AtualizadorDeContas {
 	private double saldoTotal = 0;
 	private double selic;

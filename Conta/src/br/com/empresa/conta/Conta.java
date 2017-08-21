@@ -1,9 +1,10 @@
+package br.com.empresa.conta;
 
 public abstract class Conta {
 
 	protected double saldo;
 
-	void deposita(double valor) {
+	public void deposita(double valor) {
 		if (valor < 0) {
 			throw new ValorInvalidoException(valor);
 		} else {

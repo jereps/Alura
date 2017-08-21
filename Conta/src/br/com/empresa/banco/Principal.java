@@ -1,3 +1,7 @@
+package br.com.empresa.banco;
+import br.com.empresa.conta.Conta;
+import br.com.empresa.conta.ContaCorrente;
+
 public class Principal {
 	public static void main(String[] args) {
 		Conta conta = new ContaCorrente();

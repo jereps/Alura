@@ -1,6 +1,8 @@
-class ContaPoupanca extends Conta {
+package br.com.empresa.conta;
+
+public class ContaPoupanca extends Conta {
 	
-	void deposita(double valor) {
+	public void deposita(double valor) {
 		this.saldo += valor - 0.10;
 	}
 

@@ -1,3 +1,4 @@
+package br.com.empresa.banco;
 public class TesteErro {
 	public static void main(String[] args) {
 		System.out.println("inicio do main:");
