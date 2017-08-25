@@ -3,7 +3,7 @@ describe("Consulta", function() {
     var guilherme;
     
     beforeEach(function() {
-        guilherme = new Paciente("Guilherme", 28, 72, 1.80);
+        guilherme = new PacienteBuilder().constroi();
     });
     
    describe("teste de Consulta com retorno", function() {
