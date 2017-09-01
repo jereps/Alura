@@ -4,20 +4,53 @@ import lxml.html as parser
 import re
 from selenium import webdriver
 
+links = []
+falha = []
+i = 0
+index = 0
+'driver = webdriver.Firefox()'
 
 def cria_lista_links(r):
-    '''site = r.content'''
-    driver = webdriver.Chrome()
+    global links
+    global i
+    global index
+    global falha
+
+    web = requests.get(r)
+    site = web.content
+    '''driver = webdriver.Firefox()
     driver.get(r)
     links = []
-    html = parser.fromstring(driver.page_source)
+    html = parser.fromstring(driver.page_source)'''
+    html = parser.fromstring(site)
     linkss = html.xpath('//a/@href')
 
     for link in linkss:
-       links.append("link")
+        if ('http://' not in link and 'https://' not in link and 'downloads' not in link):
+          valido = requests.get("http://fatecsjc-prd.azurewebsites.net/" + link)
+          if (valido.status_code != 200):
+              if(link not in falha):
+                 falha.append(link)
+          elif (link not in links):
+             print link
+             links.append(link)
+             cria_lista_links("http://fatecsjc-prd.azurewebsites.net/" + link)
 
-    for linknovo in link:
-        cria_lista_links(r + linknovo)
+    print id(links)
+
+    i = len(links)
+    '''while (index < i):
+
+       print i
+       print index
+       print id(i)
+       print id(index)
+       print links[index]
+       lins = (cria_lista_links(r + links[index]))
+'''
+
+
+
     '''nomearq = "fatec0.txt"
 
     arq = open(nomearq, "w")
@@ -27,8 +60,9 @@ def cria_lista_links(r):
           arq.write(r + lin)
           arq.write('\n')
 
-    arq.close()'''
-    return links
+    arq.close()
+    return links'''
+    return falha
 
 r = "http://fatecsjc-prd.azurewebsites.net/"
 print '\n'.join(cria_lista_links(r))
