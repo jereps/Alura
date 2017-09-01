@@ -30,15 +30,16 @@ def cria_lista_links(r):
           valido = requests.get("http://fatecsjc-prd.azurewebsites.net/" + link)
           if (valido.status_code != 200):
               if(link not in falha):
+                 print "Link com erro: " + link
                  falha.append(link)
           elif (link not in links):
              print link
              links.append(link)
              cria_lista_links("http://fatecsjc-prd.azurewebsites.net/" + link)
 
-    print id(links)
+    'print id(links)'
 
-    i = len(links)
+    'i = len(links)'
     '''while (index < i):
 
        print i
