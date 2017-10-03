@@ -13,6 +13,13 @@ public abstract class Conta {
 	private int numero;
 	private String nome;
 
+	public Conta(double saldo) {
+		this.saldo = saldo;
+	}
+	
+	public Conta() {
+		
+	}
 	
 	/**
 	 * Metodo que incrementa o saldo.
