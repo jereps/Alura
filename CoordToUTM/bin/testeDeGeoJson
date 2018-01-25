@@ -1,0 +1,389 @@
+
+///controller/ManagementPlanningController.java
+
+@RequestMapping(value = "/api/management_planning", method = RequestMethod.GET)
+	public @ResponseBody HashMap<String, Object> managementPlanningJSON()
+			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+			InvocationTargetException, JSONException, IOException {
+		List<Object> listAneelSet = new ArrayList<>();
+		List<Object> listCircuit = new ArrayList<>();
+		List<ModelCSD> listCSD = new ArrayList<>();
+		List<Object> listAssetEnergy = new ArrayList<>();
+		List<JSONObject> listNetwork = new ArrayList<>();
+		List<JSONObject> listCSDJSon = new ArrayList<>();
+		
+		long start = System.currentTimeMillis();
+		// faz o trabalho a ser medido
+		
+		
+		
+
+		for (ModelAssetEnergy modelAsset : daoEnergyAsset.getAll()) {
+
+			listAssetEnergy.add(convertAssetToHashMap(modelAsset));
+		}
+		
+		long elapsed1 = System.currentTimeMillis() - start;
+		
+		System.out.println("Duração :"+elapsed1);
+
+		// for(ModelCSD csd: daoCSD.getAll()){
+		//
+		// listCSD.add(convertCSDToHashMap(csd));
+		// }
+
+		// lista de CSD para Teste do GeoJson
+		for (ModelCSD csd : daoCSD.getAll()) {
+			listCSD.add(csd);
+		}
+
+//		for (ModelAneelSet aneel : daoAneelSet.getAll()) {
+//
+//			listAneelSet.add(convertAneelSetToHashMap(aneel));
+//		}
+
+//		for (ModelCircuit circuit : daoCircuit.getAll()) {
+//
+//			listCircuit.add(convertCircuitToHashMap(circuit));
+//		}
+		
+		
+		
+//		BufferedWriter out = new BufferedWriter(new FileWriter("/home/siad-aero/Documents/Projeto/dsr-dev/siadaero/src/main/webapp/vendors/js/geojson.js"));
+		
+		// ******************************************************************************************************
+		
+//		JSONObject json2 = new JSONObject();
+//		
+//		JSONObject properties2 = new JSONObject();
+//		
+//		JSONArray location2 = new JSONArray();
+//		
+//		JSONObject geometry2 = new JSONObject();
+		
+	
+		
+		for (Object energys : listAssetEnergy) {
+			
+			JSONObject json2 = new JSONObject();
+			
+			JSONObject properties2 = new JSONObject();
+			
+			JSONArray location2 = new JSONArray();
+			
+			JSONObject geometry2 = new JSONObject();
+			
+			HashMap<String, Object> energy = (HashMap<String, Object>) energys;
+//			System.out.println("Id do AssetEnergy: " + energy.get("name"));
+			
+			
+			List<?> location =  (List<?>) energy.get("locationArea");
+			
+			for (Object locate : location) {
+				ModelGeoLocation aux = (ModelGeoLocation) locate;
+				JSONArray teste = new JSONArray();
+				
+				teste.add(aux.getInitLongitude());
+				teste.add(aux.getInitLatitude());
+				
+				location2.add(teste);
+				
+				//System.out.println("Energy Latitudo: " + aux.getInitLatitude());
+
+			}
+			
+			properties2.put("popupContent", energy.get("name"));
+			json2.put("properties", properties2);
+			json2.put("type", "Feature");
+
+
+			JSONArray array2 = new JSONArray();
+
+			
+
+
+			//array2.add(location2);
+			geometry2.put("coordinates", location2);
+			geometry2.put("type", "LineString");
+			json2.put("geometry", geometry2);
+
+//			String jsonString2 = json2.toString();
+//			String arqui2 = "var energy =" + jsonString2 + ";";
+//			
+//			out.write(arqui2+"\n");
+			
+			listNetwork.add(json2);
+			//System.out.println("Dados de Energy: " + json2);
+			//System.out.println("// ******************************************************************************************************");
+				
+		}
+			
+//		System.out.println("lista de energy" + listNetwork);
+		
+
+
+		
+		// ******************************************************************************************************
+		
+		
+		
+		
+		// ******************************************************************************************************
+
+//		JSONObject json = new JSONObject();
+//
+//		JSONArray location = new JSONArray();
+//
+//		JSONObject properties = new JSONObject();
+//
+//		JSONObject geometry = new JSONObject();
+
+		for (ModelCSD csd : listCSD) {
+			
+			JSONObject json = new JSONObject();
+
+			JSONArray location = new JSONArray();
+
+			JSONObject properties = new JSONObject();
+
+			JSONObject geometry = new JSONObject();
+
+			properties.put("popupContent", csd.getName());
+			json.put("properties", properties);
+			json.put("type", "Feature");
+
+			List<?> locationlist = csd.getLocationArea();
+
+			JSONArray array1 = new JSONArray();
+
+			JSONArray array2 = new JSONArray();
+
+			array1.add(array2);
+
+			for (Object locate : locationlist) {
+				ModelGeoLocation aux = (ModelGeoLocation) locate;
+				JSONArray teste = new JSONArray();
+
+				
+				teste.add(aux.getInitLongitude());
+				teste.add(aux.getInitLatitude());
+
+				location.add(teste);
+
+			}
+
+			array2.add(location);
+			geometry.put("coordinates", array1);
+			geometry.put("type", "MultiPolygon");
+			json.put("geometry", geometry);
+
+//			System.out.println(json);
+			listCSDJSon.add(json);
+			
+		}
+		
+
+//		out.close();
+		
+//		String jsonString2 = json2.toString();
+//		String arqui2 = "var energy =" + jsonString2 + ";";
+//		
+//		String jsonString = json.toString();
+//		String arqui = "var cord =" + jsonString + ";";
+//
+//		System.out.println(arqui2);
+//		System.out.println(arqui);
+		//BufferedWriter buffWrite;
+
+//		try {
+//			
+//			BufferedWriter out = new BufferedWriter(new FileWriter("/home/siad-aero/Documents/Projeto/dsr-dev/siadaero/src/main/webapp/vendors/js/geojson.js"));
+//			out.write(arqui.toString());
+//			out.write(arqui2.toString());
+//			out.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+	
+
+		// ******************************************************************************************************
+		
+		
+
+		generalFilterData.put(tagAneelSet, listAneelSet);
+		generalFilterData.put(tagCircuit, listCircuit);
+		generalFilterData.put(tagAssetEnergy, listAssetEnergy);
+		generalFilterData.put(tagNetwork, listNetwork);
+		//generalFilterData.put(tagCSD, json);
+		generalFilterData.put("listCSDJson", listCSDJSon);
+		
+		long elapsed = System.currentTimeMillis() - start;
+		
+		System.out.println("Duração :"+elapsed);
+		
+
+		return generalFilterData;
+	}
+	
+	
+	
+	//.../planning/management/managementPlanning.jsp
+	
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+	integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+	crossorigin=""></script>
+	
+	
+	
+	<script src="<c:url value="/vendors/js/geojson.js" />"></script>
+										<!-- //<script src="sample-geojson.js" type="text/javascript"></script> -->
+
+										<script type="text/javascript">
+											    
+											    	
+											        var map = L.map('mapid').setView([-23.13566385791339, -45.92491149902344], 11);
+														
+												    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+												    	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+												    }).addTo(map);
+										
+												    var isDraft = true;
+												    var inspectionPlanningId = 0;
+										
+											    	 baseJsonURL += '/draft';
+										
+// 												    initializeMap("/siadaero/management_planning/json/");
+												    
+													//draw(); 
+													
+													
+													
+													//var assetEnergy = {};
+													
+// 													console.log(assetEnergy);
+													
+													
+													
+													
+
+// 													L.geoJSON([cord], {
+
+// 														style: function (feature) {
+// 															return feature.properties && feature.properties.style;
+// 														},
+
+// 														onEachFeature: onEachFeature,
+
+// 														pointToLayer: function (feature, latlng) {
+// 															return L.circleMarker(latlng, {
+// 																radius: 8,
+// 																fillColor: "#ff7800",
+// 																color: "#000",
+// 																weight: 1,
+// 																opacity: 1,
+// 																fillOpacity: 0.8
+// 															});
+// 														}
+// 													}).addTo(map);
+
+
+													
+													
+													$.ajax({url: "/siadaero/management_planning/json/",
+													    type: "get", //tipo da requisicao, get ou post
+													    dataType:"json", //tipo de retorno, no nosso caso, json
+													    data: {}, // um objeto com valores para passar pra servlet, axo que vc nem vai usar
+													    success: function(data){
+													    	const energys = data.energys;
+													    	const csdJson = data.listCSDJson;
+													    	
+													    	energys.forEach(item => {
+													    		energisando(item);
+													    	})
+													    	
+													    	csdJson.forEach(item => {
+													    		csdsJson(item);
+													    	})
+													    	
+													    } //funcao de callback que recebe o json e trata ele
+													});
+													
+													var baseballIcon = L.icon({
+														iconUrl: 'baseball-marker.png',
+														iconSize: [32, 37],
+														iconAnchor: [16, 37],
+														popupAnchor: [0, -28]
+													});
+													
+													function onEachFeature(feature, layer) {
+														var popupContent = "<p>I started out as a GeoJSON " +
+																feature.geometry.type + ", but now I'm a Leaflet vector!</p>";
+
+														if (feature.properties && feature.properties.popupContent) {
+															popupContent += feature.properties.popupContent;
+														}
+
+														layer.bindPopup(popupContent);
+													}
+													
+													
+													function csdsJson(obj){
+													L.geoJSON(obj, {
+
+														style: function (feature) {
+															return feature.properties && feature.properties.style;
+														},
+
+														onEachFeature: onEachFeature,
+
+														pointToLayer: function (feature, latlng) {
+															return L.circleMarker(latlng, {
+																radius: 8,
+																fillColor: "#ff7800",
+																color: "#000",
+																weight: 1,
+																opacity: 1,
+																fillOpacity: 0.8
+															});
+														}
+													}).addTo(map);
+													}
+													
+
+													function energisando(obj){
+													L.geoJSON(obj, {
+														 
+														filter: function (feature, layer) {
+															if (feature.properties) {
+																// If the property "underConstruction" exists and is true, return false (don't render features under construction)
+																return feature.properties.underConstruction !== undefined ? !feature.properties.underConstruction : true;
+															}
+															return false;
+														},
+
+														onEachFeature: onEachFeature
+													}).addTo(map);
+													}
+
+// 													var coorsLayer = L.geoJSON(coorsField, {
+
+// 														pointToLayer: function (feature, latlng) {
+// 															return L.marker(latlng, {icon: baseballIcon});
+// 														},
+
+// 														onEachFeature: onEachFeature
+// 													}).addTo(map);
+
+// 												  var coordina = L.geoJSON(geojsonFeature, {
+// 												    pointToLayer: function (feature, latlng) {
+// 												      return L.marker(latlng);
+// 												    },
+// 												    onEachFeature: onEachFeature
+// 												  }).addTo(map);
+													
+												draw(); 
+													
+										        </script>
+	
