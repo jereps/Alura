@@ -1,6 +1,7 @@
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,7 +78,9 @@ public class ConvertToUTM {
 	}
 	
 	
-	public  List<Double> UTMtoDMS(String UTM) {
+	public  HashMap<String,Double> UTMtoDMS(String UTM) {
+		
+		HashMap<String, Double> latlong = new HashMap<>();
 		
 		double latitude;
 	    double longitude;
@@ -104,11 +107,13 @@ public class ConvertToUTM {
         longitude=Math.round(longitude*10000000);
         longitude=longitude/10000000;
 		
-        DecimalFormat df = new DecimalFormat("0.0000");
-        df.setRoundingMode(RoundingMode.UP);
+        DecimalFormat df = new DecimalFormat("0.000000");
+        //df.setRoundingMode(RoundingMode.DOWN);
         
-		//return df.format(latitude) + " " + df.format(longitude);
-		return Arrays.asList(latitude,longitude);
+        latlong.put("latitude", latitude);
+        latlong.put("longitude",longitude);
+        
+		return latlong;
 	}
 	
 }
