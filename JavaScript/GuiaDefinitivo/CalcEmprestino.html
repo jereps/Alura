@@ -7,7 +7,28 @@
       .output { font-weight: bold;}             /* Valor calculados em negrito */
       #payment { text-decoration: underline;}   /* Para elemento com id="payment"*/
       #graph { border: solid black 1px;}        /* O gráfico tem borda simples */
+      th, td { vertical-align: top;}            /* Não centraliza células da tabela */
     </style>
   </head>
+
+  <body>
+    <!--
+      Esta é uam tabela HTML com elementos <input> que permitem ao usuário inserir dados e
+      elementos <span> nos quais o programa pode exibir seus resultados. Esses elementos têm
+      identificações como "interest" e "years". Essas identificações são usadas no código
+      JavaScript que vem após a tabela. Note que alguns dos elementos de entrada definem
+      rotinas de tratamento de evento "onchange" ou "onclick". Elas especificam strings de
+      código JavaScript a ser executado quando o usuário insere dados ou dá um clique.
+    -->
+    <table>
+      <tr><th>Enter Loan Data:</th>
+        <td></td>
+        <th>Loan Balance, Cumulative Equity, and Interest Payments</th></tr>
+      <tr><td>Amount of the loan ($):</td>
+          <td><input id="amount" onchange="calculate();"></td>
+          <td rowspan=8>
+            <canvas id="graph" width="400" height="250"></canvas></td></tr>
+    </table>
+  </body>
 
 </html>
